@@ -29,6 +29,7 @@ export class Server {
 
 	static async startServer() {
 		await Server.startDatabase();
+		await Server.connectToWhatsapp();
 		Logger.success('Server is up and running 🚀');
 	}
 
