@@ -27,4 +27,15 @@ export class Server {
 		});
 	}
 
+	private static async startDatabase() {
+		if (process.env.NODE_ENV == 'development') {
+			Logger.info('Running application in Development mode.');
+			config.mongoDB.url = config.mongoDB.dbLocalURL;
+		} else if (process.env.NODE_ENV == 'production') {
+			Logger.info('Running application in Production mode.');
+			config.mongoDB.url = config.mongoDB.atlasURL;
+		}
+
+		await MongoDB.connectToDatabase(config.mongoDB.url);
+	}
 }
