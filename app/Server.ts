@@ -44,6 +44,16 @@ export class Server {
 			console.log('Client is ready!');
 		});
 
+		client.on('message', (message) => {
+			console.log(Object.values(message)[0].body);
+			const name = Object.values(message)[0]?.notifyName;
+
+			if (message.body.toLocaleLowerCase().includes('hi') || message.body.toLocaleLowerCase().includes('hello')) {
+				message.reply(`Hi ${name ?? "I don't yet know your name!"}` + " How are you?");
+			} else {
+				message.reply(`Hi ${name}, to interact with me, say Hi or Hello! 👋`)
+			}
+		});
 
 		client.initialize();
 	}
