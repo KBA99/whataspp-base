@@ -44,6 +44,8 @@ export class Server {
 			console.log('Client is ready!');
 		});
 
+
+		client.initialize();
 	}
 
 	private static async startDatabase() {
