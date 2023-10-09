@@ -1,0 +1,24 @@
+{
+	"name": "whatsapp-base",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "NODE_ENV=development ts-node app/index.ts",
+		"prod": "NODE_ENV=production ts-node app/index.ts"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"mongoose": "^7.3.1",
+		"qrcode-terminal": "^0.12.0",
+		"ts-node": "^10.9.1",
+		"tsconfig-paths": "^4.2.0",
+		"whatsapp-web.js": "^1.21.0"
+	},
+	"devDependencies": {
+		"@types/qrcode-terminal": "^0.12.0"
+	}
+}
