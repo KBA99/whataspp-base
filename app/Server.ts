@@ -32,6 +32,18 @@ export class Server {
 		Logger.success('Server is up and running 🚀');
 	}
 
+	static async connectToWhatsapp() {
+		const client = new Client({ authStrategy: new LocalAuth() });
+
+		client.on('qr', (qr: any) => {
+			qrcode.generate(qr, { small: true });
+		});
+
+		client.on('ready', () => {
+			console.log('Client is ready!');
+		});
+
+	}
 
 	private static async startDatabase() {
 		if (process.env.NODE_ENV == 'development') {
