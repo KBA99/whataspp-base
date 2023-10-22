@@ -30,7 +30,15 @@ export class Server {
 	static async startServer() {
 		await Server.startDatabase();
 		await Server.connectToWhatsapp();
+		await Server.refreshConversations();
 		Logger.success('Server is up and running 🚀');
+	}
+
+	static async refreshConversations() {
+		const conversations = await whatsappSchema.find();
+		conversations.forEach((converastion) => {
+			new WhatsappConversation(converastion.whatsAppId, converastion);
+		});
 	}
 
 	static async connectToWhatsapp() {
