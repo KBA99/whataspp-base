@@ -1,8 +1,10 @@
+import { WhatsappConversation } from '~/app/whatsapp-conversations';
 import { config } from './config';
 import { MongoDB } from './data/repository/database.connect';
 import { Logger } from './utils/Logger';
 import qrcode from 'qrcode-terminal';
 import { Client, LocalAuth } from 'whatsapp-web.js';
+import whatsappSchema from './data/repository/data/whatsapp.schema';
 
 export class Server {
 	static {
@@ -52,14 +54,22 @@ export class Server {
 			Logger.info('Client is ready!');
 		});
 
-		client.on('message', (message) => {
-			console.log(Object.values(message)[0].body);
-			const name = Object.values(message)[0]?.notifyName;
+		client.on('message_create', async (message) => {
+			if (message.fromMe === false) {
+				const isConversationAlready = WhatsappConversation.conservations.includes(
+					message.from
+				);
+				let conversation: WhatsappConversation | undefined;
 
-			if (message.body.toLocaleLowerCase().includes('hi') || message.body.toLocaleLowerCase().includes('hello')) {
-				message.reply(`Hi ${name ?? "I don't yet know your name!"}` + " How are you?");
-			} else {
-				message.reply(`Hi ${name}, to interact with me, say Hi or Hello! 👋`)
+				if (isConversationAlready) {
+					conversation = WhatsappConversation.whatsappConversations.get(message.from);
+					await conversation?.runAction(message);
+
+					// console.log(conversation);
+				} else {
+					const whatsappConverastion = new WhatsappConversation(message.from);
+					Logger.success('Started a new conversation');
+				}
 			}
 		});
 

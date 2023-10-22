@@ -1,8 +1,26 @@
 import mongoose from 'mongoose';
-import { WhatsappDoc } from '../types/mongoose.types';
+import { ConverstationStage, WhatsappDoc } from '../types/mongoose.types';
 
 const WhatsappSchema = new mongoose.Schema<WhatsappDoc>(
-	{},
+	{
+		name:{
+			type: String,
+			required: true,
+		},
+		email: {
+			type: String,
+			required: false,
+		},
+		whatsAppId: {
+			type: String,
+			requried: true,
+		},
+		stage: {
+			type: Number,
+			required: false,
+			default: ConverstationStage.email
+		}
+	},
 	{
 		timestamps: true,
 	}
