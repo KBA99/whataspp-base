@@ -40,8 +40,8 @@ export class Server {
 			qrcode.generate(qr, { small: true });
 		});
 
-		client.on('ready', () => {
-			console.log('Client is ready!');
+		client.on('ready', async () => {
+			Logger.info('Client is ready!');
 		});
 
 		client.on('message', (message) => {
